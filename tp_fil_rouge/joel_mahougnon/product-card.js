@@ -10,6 +10,8 @@ class ProductCard extends HTMLElement {
     const price = this.getAttribute("price") || "0";
     const image =
       this.getAttribute("image") || "./assets/images/placeholder.jpg";
+    const description =
+      this.getAttribute("description") || "No description available.";
 
     this.shadowRoot.innerHTML = `
             <style>
@@ -40,7 +42,23 @@ class ProductCard extends HTMLElement {
                 <h2>${name}</h2>
                 <p>${price} XOF</p>
             </div>
+						<dialog id="productDialog">
+							<p>${name}</p>
+							<p>${price} XOF</p>
+							<p>${description}</p>
+							<button id="closeDialog">Close</button>
+						</dialog>
         `;
+
+    const dialog = this.shadowRoot.getElementById("productDialog"); // Sélectionne le dialog dans le shadow DOM
+    this.shadowRoot.querySelector(".card").addEventListener("click", () => {
+      dialog.showModal();
+    }); // Affiche le dialog lorsque la carte est cliquée
+    this.shadowRoot
+      .querySelector("#closeDialog")
+      .addEventListener("click", () => {
+        dialog.close();
+      }); // Ferme le dialog lorsque le bouton de fermeture est cliqué
   }
 }
 

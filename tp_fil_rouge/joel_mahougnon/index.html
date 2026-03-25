@@ -6,14 +6,59 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Site e-commerce Next Gen 2026</title>
 	<script src="product-card.js" defer></script>
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+			background-color: #f4f4f4;
+			margin: 0;
+			padding: 20px;
+		}
+
+		h1 {
+			text-align: center;
+			color: #333;
+		}
+
+		/* On définit le parent comme le conteneur à surveiller */
+		.cards {
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+			gap: 10px;
+
+			/* Définit le contexte de conteneur */
+			container-type: inline-size;
+
+			width: 100%;
+			max-width: 1200px;
+			margin: 10px auto;
+		}
+
+		/* On modifie la grille en fonction de SA PROPRE largeur */
+		@container gallery (min-width: 600px) {
+			.cards {
+				grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+			}
+		}
+
+		@container gallery (min-width: 900px) {
+			.cards {
+				grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+			}
+		}
+	</style>
 </head>
 
 <body>
 	<h1>Bienvenue sur notre site e-commerce Next Gen 2026</h1>
-	<product-card name="Smartphone XYZ" price="180000" image="./assets/images/smartphone.jpg"></product-card>
-	<product-card name="Laptop ABC" price="230000" image="./assets/images/laptop.jpg"></product-card>
-	<product-card name="Headphones DEF" price="210000" image="./assets/images/headphone.jpg"></product-card>
-	<product-card name="Smartwatch GHI" price="40000" image="./assets/images/smartwatch.jpg"></product-card>
+	<div class="cards">
+		<product-card class="card" name="Smartphone XYZ" price="180000" image="./assets/images/smartphone.jpg"
+			description="Iphone 17 pro max"></product-card>
+		<product-card class="card" name="Laptop ABC" price="230000" image="./assets/images/laptop.jpg"
+			description="24 giga de RAM et 250 giga de ROM"></product-card>
+		<product-card class="card" name="Headphones DEF" price="210000"
+			image="./assets/images/headphone.jpg"></product-card>
+		<product-card class="card" name="Smartwatch GHI" price="40000"></product-card>
+	</div>
 </body>
 
 </html>
