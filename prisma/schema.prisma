@@ -1,0 +1,34 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+   url     = env("DATABASE_URL")
+  
+}
+
+model Student {
+  id        Int       @id @default(autoincrement())
+  name      String
+  email     String     @unique
+  events    Event[]    @relation("StudentEvents")
+  createdAt DateTime   @default(now())
+}
+
+model Event {
+  id           Int        @id @default(autoincrement())
+  title        String
+  description  String?
+  date         DateTime
+  association  Association? @relation(fields: [associationId], references: [id])
+  associationId Int?
+  students     Student[]   @relation("StudentEvents")
+  createdAt    DateTime    @default(now())
+}
+
+model Association {
+  id       Int      @id @default(autoincrement())
+  name     String
+  events   Event[]
+}

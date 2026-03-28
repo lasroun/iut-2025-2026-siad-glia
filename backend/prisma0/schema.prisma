@@ -1,0 +1,45 @@
+// Configuration de la source de données
+datasource db {
+  provider = "postgresql" // ou "sqlite" pour tes tests locaux
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum Role {
+  ETUDIANT
+  ADMIN_CLUB
+}
+
+model User {
+  id            String         @id @default(cuid())
+  email         String         @unique
+  name          String?
+  role          Role           @default(ETUDIANT)
+  registrations Registration[]
+  createdAt     DateTime       @default(now())
+}
+
+model Event {
+  id            String         @id @default(cuid())
+  title         String
+  description   String
+  date          DateTime
+  location      String
+  maxPlaces     Int
+  registrations Registration[]
+  createdAt     DateTime       @default(now())
+}
+
+model Registration {
+  id        String   @id @default(cuid())
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+  event     Event    @relation(fields: [eventId], references: [id])
+  eventId   String
+  createdAt DateTime @default(now())
+
+  @@unique([userId, eventId]) // Empêche un étudiant de s'inscrire deux fois au même événement
+}
